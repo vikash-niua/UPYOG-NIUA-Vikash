@@ -31,7 +31,9 @@ FROM amazoncorretto:17-alpine
 WORKDIR /opt/egov
 
 # Copy app artifacts and startup script from build stage
-COPY --from=build --chmod=755 /app/target/*.jar /app/start.sh /opt/egov/
+COPY --from=build /app/target/*.jar /app/start.sh /opt/egov/
+RUN chmod 755 /opt/egov/start.sh && \
+    ls -l /opt/egov/start.sh
 
 # Set the container startup command
 CMD ["/opt/egov/start.sh"]

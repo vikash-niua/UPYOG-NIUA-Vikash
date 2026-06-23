@@ -27,8 +27,6 @@ FROM amazoncorretto:17-alpine
 
 WORKDIR /opt/egov
 
-COPY --from=build /app/target/*.jar /app/start.sh /opt/egov/
-
-RUN chmod +x /opt/egov/start.sh
+COPY --from=build --chmod=755 /app/target/*.jar /app/start.sh /opt/egov/
 
 CMD ["/opt/egov/start.sh"]

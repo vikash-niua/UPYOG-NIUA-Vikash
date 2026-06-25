@@ -1,6 +1,4 @@
 # UPYOG UI
-
-### devops
 UPYOG (Urban Platform for deliverY of Online Governance) is India's largest platform for governance services. Visit [UPYOG documentation portal](https://upyog-docs.gitbook.io/upyog-v-1.0/) for more details.
 
 This repository contains source code for web implementation of the UPYOG UI modules with dependencies and libraries.

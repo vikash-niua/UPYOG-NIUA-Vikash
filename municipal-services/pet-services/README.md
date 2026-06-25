@@ -1,5 +1,5 @@
 # Pet Service
-# test devops
+
 Pet service creates pet application for user which can be acted upon by ulb officals to verify and approve the application, and further provide the user with a pet certificate.
 #### test
 ## Technology Stack

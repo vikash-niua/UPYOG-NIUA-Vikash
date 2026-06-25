@@ -11,30 +11,20 @@ RUN apk add --no-cache maven
 COPY ${WORK_DIR}/pom.xml ./pom.xml
 COPY build/maven/start.sh ./start.sh
 
-# (Optional) Download dependencies for faster builds
-# RUN mvn -B dependency:go-offline
+# Layer caches here — only invalidated when pom.xml changes, so on most builds
+# this RUN step is skipped entirely and served from Kaniko's layer cache.
+RUN mvn -B -f /app/pom.xml dependency:go-offline
 
-# Copy the actual source code
+# This layer always rebuilds (source changes every commit), but reuses the
+# already-cached dependencies from the layer above — no re-download.
 COPY ${WORK_DIR}/src ./src
-
-# Build the JAR (skip tests for faster build)
-RUN mvn -B -f /app/pom.xml clean package -DskipTests
-
+RUN mvn -B -f /app/pom.xml package -o
 
 # Create runtime image
-#FROM egovio/8-openjdk-alpine
-#FROM egovio/amazoncorretto:17-alpine3.19
-#FROM egovio/amazoncorretto:17-alpine
-
 FROM amazoncorretto:17-alpine
 
 WORKDIR /opt/egov
 
-# Copy app artifacts and startup script from build stage
-COPY --from=build /app/target/*.jar /app/start.sh /opt/egov/
+COPY --from=build --chmod=755 /app/target/*.jar /app/start.sh /opt/egov/
 
-# Ensure the start script is executable
-RUN chmod +x /opt/egov/start.sh
-
-# Set the container startup command
 CMD ["/opt/egov/start.sh"]

@@ -18,7 +18,7 @@ RUN mvn -B -f /app/pom.xml dependency:go-offline
 # This layer always rebuilds (source changes every commit), but reuses the
 # already-cached dependencies from the layer above — no re-download.
 COPY ${WORK_DIR}/src ./src
-RUN mvn -B -f /app/pom.xml package -o
+RUN mvn -B -f /app/pom.xml package
 
 # Create runtime image
 FROM amazoncorretto:17-alpine

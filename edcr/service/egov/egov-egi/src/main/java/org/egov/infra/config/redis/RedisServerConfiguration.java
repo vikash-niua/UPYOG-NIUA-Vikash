@@ -60,6 +60,18 @@ import redis.clients.jedis.JedisPoolConfig;
 
 import java.util.List;
 
+/**
+ * Spring configuration for Redis connectivity (standalone or sentinel mode).
+ *
+ * <p>Configuration notes:</p>
+ * <ul>
+ *   <li>Embedded Redis server bean ({@code EmbeddedRedisServer}) is disabled by default.
+ *       Set {@code redis.enable.embedded=true} in {@code egov-erp-<username>.properties}
+ *       for local Linux/macOS development, or configure a standalone Redis instance.</li>
+ *   <li>Uses {@link JedisConnectionFactory} with Spring Data Redis for session and
+ *       cache storage.</li>
+ * </ul>
+ */
 @Configuration
 public class RedisServerConfiguration {
 
@@ -81,11 +93,11 @@ public class RedisServerConfiguration {
     @Value("#{'${redis.sentinel.hosts}'.split(',')}")
     private List<String> sentinelHosts;
 
-    @Bean
-    @Conditional(RedisServerConfigCondition.class)
-    public static EmbeddedRedisServer redisServer() {
-        return new EmbeddedRedisServer();
-    }
+//    @Bean
+//    @Conditional(RedisServerConfigCondition.class)
+//    public static EmbeddedRedisServer redisServer() {
+//        return new EmbeddedRedisServer();
+//    }
 
     @Bean
     public JedisConnectionFactory redisConnectionFactory() {

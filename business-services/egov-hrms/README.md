@@ -1,6 +1,6 @@
 # HRMS Service (egov-hrms)
 ### HRMS Service
-#### Devops Test
+##
 The objective of HRMS is to provide a service that manages all the employees enrolled onto the system. HRMS provides extensive APIs to create, update and search the employees with attributes like assignments, service history, jurisdiction etc. HRMS can be treated a sub-set of the egov-user service, Every employee created through HRMS will also be created as a user in User Service(egov-user). 
 
 ### DB UML Diagram
